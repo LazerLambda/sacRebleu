@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# sacReBLEU
+# sac:registered:eBLEU
 
 <!-- badges: start -->
 <!-- badges: end -->
