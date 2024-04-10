@@ -8,9 +8,9 @@ Maintainer: Philipp Koch <PhillKoch@protonmail.com>
 Description: One paragraph description of what the package does as one
         or more full sentences.
 License: GPL (>= 2)
-Imports:
+Imports: 
+    checkmate,
     Rcpp (>= 1.0.12)
-    checkmate (>= 2.1.0)
 LinkingTo: Rcpp
 URL: https://github.com/LazerLambda/sacReBLEU
 BugReports: https://github.com/LazerLambda/sacReBLEU/issues
