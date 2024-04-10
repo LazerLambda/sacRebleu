@@ -1,6 +1,6 @@
 #' sacReBLEU: An R package for calculating BLEU scores
 #'
-#' This package provides functions for calculating BLEU scores, 
+#' This package provides functions for calculating BLEU scores,
 #' a common metric for evaluating machine translation models.
 #'
 #' @docType package

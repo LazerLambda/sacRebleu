@@ -19,19 +19,19 @@ validate_arguments <- function(weights, smoothing, n) {
   } else {
     smoothing <- "standard"
   }
-  return(list(weights=weights, smoothing=smoothing))
+  return(list(weights = weights, smoothing = smoothing))
 }
 
 #' Computes BLEU-Score (Papineni et al., 2002).
-#' 
+#'
 #' `bleu_sentence` computes the BLEU score for a single candidate sentence and a list of reference sentences.
 #' The sentences must be tokenized before so they are represented as integer vectors.
 #' Akin to sacreBLEU, the function allows the application of different smoothing methods.
 #' Epsilon- and add-k-smoothing are available. Epsilon-smoothing is equivalent to 'floor'
-#' smoothing in the sacreBLEU implementation. 
+#' smoothing in the sacreBLEU implementation.
 #' The different smoothing techniques are described in Chen et al., 2014
 #' (https://aclanthology.org/W14-3346/).
-#' 
+#'
 #' @param references A list of reference sentences.
 #' @param candidate A candidate sentence.
 #' @param n N-gram for BLEU score (default is set to 4).
@@ -39,7 +39,7 @@ validate_arguments <- function(weights, smoothing, n) {
 #' @param smoothing Smoothing method for BLEU score (default is set to 'standard', 'floor', 'add-k' available)
 #' @param epsilon Epsilon value for epsilon-smoothing (default is set to 0.1).
 #' @param k K value for add-k-smoothing (default is set to 1).
-#' 
+#'
 #' @returns The BLEU score for the candidate sentence.
 #' @export
 #' @examples
@@ -48,7 +48,7 @@ validate_arguments <- function(weights, smoothing, n) {
 #' bleu_standard <- bleu_sentence(ref_corpus, cand_corpus)
 #' bleu_floor <- bleu_sentence(ref_corpus, cand_corpus, smoothing="floor", epsilon=0.01)
 #' bleu_add_k <- bleu_sentence(ref_corpus, cand_corpus, smoothing="add-k", k=1)
-bleu_sentence <- function(references, candidate, n=4, weights=NULL, smoothing=NULL, epsilon=0.1, k=1) {
+bleu_sentence <- function(references, candidate, n = 4, weights = NULL, smoothing = NULL, epsilon = 0.1, k = 1) {
   checkmate::assert_list(references)
   checkmate::assert_vector(references[[1]])
   checkmate::assert_numeric(unlist(references))
@@ -63,15 +63,15 @@ bleu_sentence <- function(references, candidate, n=4, weights=NULL, smoothing=NU
 }
 
 #' Computes BLEU score (Papineni et al., 2002).
-#' 
+#'
 #' `bleu_sentence` computes the BLEU score for a corpus and its respective reference sentences.
 #' The sentences must be tokenized before so they are represented as integer vectors.
 #' Akin to sacreBLEU, the function allows the application of different smoothing methods.
 #' Epsilon- and add-k-smoothing are available. Epsilon-smoothing is equivalent to 'floor'
-#' smoothing in the sacreBLEU implementation. 
+#' smoothing in the sacreBLEU implementation.
 #' The different smoothing techniques are described in Chen et al., 2014
 #' (https://aclanthology.org/W14-3346/).
-#' 
+#'
 #' @param references A list of a list of reference sentences (`list(list(c(1,2,...)), list(c(3,5,...)))`).
 #' @param candidate A list of candidate sentences (`list(c(1,2,...), c(3,5,...))`).
 #' @param n N-gram for BLEU score (default is set to 4).
@@ -79,7 +79,7 @@ bleu_sentence <- function(references, candidate, n=4, weights=NULL, smoothing=NU
 #' @param smoothing Smoothing method for BLEU score (default is set to 'standard', 'floor', 'add-k' available)
 #' @param epsilon Epsilon value for epsilon-smoothing (default is set to 0.1).
 #' @param k K value for add-k-smoothing (default is set to 1).
-#' 
+#'
 #' @returns The BLEU score for the candidate sentence.
 #' @export
 #' @examples
@@ -88,10 +88,10 @@ bleu_sentence <- function(references, candidate, n=4, weights=NULL, smoothing=NU
 #' bleu_corpus_standard <- bleu_corpus(ref_corpus, cand_corpus, weights=c(0.3333, 0.3333, 0.3333))
 #' bleu_corpus_floor <- bleu_corpus(ref_corpus, cand_corpus, smoothing="floor", epsilon=0.01)
 #' bleu_corpus_add_k <- bleu_corpus(ref_corpus, cand_corpus, smoothing="add-k", k=1)
-bleu_corpus <- function(references, candidates, n=4, weights=NULL, smoothing=NULL, epsilon=0.1, k=1) {
+bleu_corpus <- function(references, candidates, n = 4, weights = NULL, smoothing = NULL, epsilon = 0.1, k = 1) {
   checkmate::assert_list(references)
-  checkmate::assert_true(Reduce(function(acc, e) {(class(e) == "list") && acc}, references, TRUE))
-  checkmate::assert_true(Reduce(function(acc, e) {(class(e) %in% c("numeric", "integer")) && acc}, candidates, TRUE))
+  checkmate::assert_true(Reduce(function(acc, e) (class(e) == "list") && acc, references, TRUE))
+  checkmate::assert_true(Reduce(function(acc, e) (class(e) %in% c("numeric", "integer")) && acc, candidates, TRUE))
   checkmate::assert_true(length(references) == length(candidates))
   checkmate::assert_numeric(n)
   checkmate::assert_true(n > 0 && n %% 1 == 0)
