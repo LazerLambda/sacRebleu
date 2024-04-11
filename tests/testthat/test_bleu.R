@@ -1,76 +1,76 @@
-library(checkmate)
+library(testthat)
 cand_corpus <- list(c(1,2,3), c(1,2))
 ref_corpus <- list(list(c(1,2,3), c(2,3,4)), list(c(1,2,6), c(781, 21, 9), c(7, 3)))
 
 
 test_that("Expect errors for wrong arguments", {
-  checkmate::expect_error(bleu_sentence('as', 'as', 'as'))
-  checkmate::expect_error(bleu_sentence(-a, TRUE, 0.5))
-  checkmate::expect_error(bleu_sentence(list(list(1,2,3), list(2,3,4)), list(1,2,3), weights=list(0.33, 0.33, 0.33)))
-  checkmate::expect_error(bleu_sentence(list(c(1,2,3), c(2,3,4)), c(1,2,3), weights=list(0.33, 0.33, 0.33)))
-  checkmate::expect_error(bleu_sentence(list(list(1,2,3), list(2,3,4)), list(1,2,3), weights=c(0.33, 0.33, 0.33)))
-  checkmate::expect_error(bleu_sentence(NULL, NULL, weights=NULL))
-  checkmate::expect_error(bleu_sentence(list(c(1,2,3), c(2,3,4)), c(1,2,3), n=-1))
-  checkmate::expect_error(bleu_sentence(list(c(1,2,3), c(2,3,4)), c(1,2,3), n=0.5))
+  testthat::expect_error(bleu_sentence('as', 'as', 'as'))
+  testthat::expect_error(bleu_sentence(-a, TRUE, 0.5))
+  testthat::expect_error(bleu_sentence(list(list(1,2,3), list(2,3,4)), list(1,2,3), weights=list(0.33, 0.33, 0.33)))
+  testthat::expect_error(bleu_sentence(list(c(1,2,3), c(2,3,4)), c(1,2,3), weights=list(0.33, 0.33, 0.33)))
+  testthat::expect_error(bleu_sentence(list(list(1,2,3), list(2,3,4)), list(1,2,3), weights=c(0.33, 0.33, 0.33)))
+  testthat::expect_error(bleu_sentence(NULL, NULL, weights=NULL))
+  testthat::expect_error(bleu_sentence(list(c(1,2,3), c(2,3,4)), c(1,2,3), n=-1))
+  testthat::expect_error(bleu_sentence(list(c(1,2,3), c(2,3,4)), c(1,2,3), n=0.5))
 
-  checkmate::expect_error(bleu_corpus('as', 'as', 'as'))
-  checkmate::expect_error(bleu_corpus(-a, TRUE, 0.5))
-  checkmate::expect_error(bleu_corpus(list(list(list(1,2,3), list(2,3,4))), list(list(1,2,3)), weights=list(0.33, 0.33, 0.33)))
-  checkmate::expect_error(bleu_corpus(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), weights=list(0.33, 0.33, 0.33)))
-  checkmate::expect_error(bleu_corpus(list(list(list(1,2,3), list(2,3,4))), list(list(1,2,3)), weights=c(0.33, 0.33, 0.33)))
-  checkmate::expect_error(bleu_corpus(NULL, NULL, weights=NULL))
-  checkmate::expect_error(bleu_corpus(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), n=-1))
-  checkmate::expect_error(bleu_corpus(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), n=0.5))
+  testthat::expect_error(bleu_corpus('as', 'as', 'as'))
+  testthat::expect_error(bleu_corpus(-a, TRUE, 0.5))
+  testthat::expect_error(bleu_corpus(list(list(list(1,2,3), list(2,3,4))), list(list(1,2,3)), weights=list(0.33, 0.33, 0.33)))
+  testthat::expect_error(bleu_corpus(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), weights=list(0.33, 0.33, 0.33)))
+  testthat::expect_error(bleu_corpus(list(list(list(1,2,3), list(2,3,4))), list(list(1,2,3)), weights=c(0.33, 0.33, 0.33)))
+  testthat::expect_error(bleu_corpus(NULL, NULL, weights=NULL))
+  testthat::expect_error(bleu_corpus(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), n=-1))
+  testthat::expect_error(bleu_corpus(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), n=0.5))
 })
 
 test_that("Expect number for `bleu_sentence`", {
-  checkmate::expect_number(bleu_sentence(list(c(1,2,3), c(2,3,4)), c(1,2,3), n=2))
+  testthat::expect_number(bleu_sentence(list(c(1,2,3), c(2,3,4)), c(1,2,3), n=2))
   ref_corpus <- list(c(1,2,3,4))
   cand_corpus <- c(1,2,3,5)
-  checkmate::expect_number(bleu_sentence(list(c(1,2,3), c(2,3,4)), c(1,2,3), weights=c(0.33, 0.33, 0.33)))
-  checkmate::expect_number(bleu_sentence(ref_corpus, cand_corpus, weights=c(0.25, 0.25, 0.25, 0.25)))
-  checkmate::expect_number(bleu_sentence(ref_corpus, cand_corpus, n=4, smoothing="floor", epsilon=0.01))
-  checkmate::expect_number(bleu_sentence(ref_corpus, cand_corpus, n=4, smoothing="add-k", k=1))
+  testthat::expect_number(bleu_sentence(list(c(1,2,3), c(2,3,4)), c(1,2,3), weights=c(0.33, 0.33, 0.33)))
+  testthat::expect_number(bleu_sentence(ref_corpus, cand_corpus, weights=c(0.25, 0.25, 0.25, 0.25)))
+  testthat::expect_number(bleu_sentence(ref_corpus, cand_corpus, n=4, smoothing="floor", epsilon=0.01))
+  testthat::expect_number(bleu_sentence(ref_corpus, cand_corpus, n=4, smoothing="add-k", k=1))
 })
 
 test_that("Expect number for `bleu_corpus`", {
-  checkmate::expect_number(bleu_corpus(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), n=2))
+  testthat::expect_number(bleu_corpus(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), n=2))
   ref_corpus <- list(list(c(1,2,3,4)))
   cand_corpus <- list(c(1,2,3,5))
-  checkmate::expect_number(bleu_corpus(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), weights=c(0.33, 0.33, 0.33)))
-  checkmate::expect_number(bleu_corpus(ref_corpus, cand_corpus, weights=c(0.25, 0.25, 0.25, 0.25)))
-  checkmate::expect_number(bleu_corpus(ref_corpus, cand_corpus, n=4, smoothing="floor", epsilon=0.01))
-  checkmate::expect_number(bleu_corpus(ref_corpus, cand_corpus, n=4, smoothing="add-k", k=1))
+  testthat::expect_number(bleu_corpus(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), weights=c(0.33, 0.33, 0.33)))
+  testthat::expect_number(bleu_corpus(ref_corpus, cand_corpus, weights=c(0.25, 0.25, 0.25, 0.25)))
+  testthat::expect_number(bleu_corpus(ref_corpus, cand_corpus, n=4, smoothing="floor", epsilon=0.01))
+  testthat::expect_number(bleu_corpus(ref_corpus, cand_corpus, n=4, smoothing="add-k", k=1))
 })
 
 test_that("NLTK & SacreBLEU Example", {
   result_nltk <- 0.7938839309316524
   result_nlreval <- bleu_corpus(ref_corpus, cand_corpus, n=3)
-  checkmate::expect_equal(result_nlreval, result_nltk, tolerance=0.001)
+  testthat::expect_equal(result_nlreval, result_nltk, tolerance=0.001)
 
   result_nlreval <- bleu_corpus(ref_corpus, cand_corpus, weights=c(0.3333, 0.3333, 0.3333))
-  checkmate::expect_equal(result_nlreval, result_nltk, tolerance=0.001)
+  testthat::expect_equal(result_nlreval, result_nltk, tolerance=0.001)
 
   result_nltk_k_smoothing <- 0.6865890479690392
   result_nlreval <- bleu_corpus(ref_corpus, cand_corpus, n=4, smoothing="add-k")
-  checkmate::expect_equal(result_nlreval, result_nltk_k_smoothing, tolerance=0.001)
+  testthat::expect_equal(result_nlreval, result_nltk_k_smoothing, tolerance=0.001)
 
   result_sacrebleu <- 0.223606797749979
   ref_corpus <- list(list(c(1,2,3,4)))
   cand_corpus <- list(c(1,2,3,5))
   result_nlreval <- bleu_corpus(ref_corpus, cand_corpus, n=4, smoothing="floor", epsilon=0.01)
-  checkmate::expect_equal(result_nlreval, result_sacrebleu, tolerance=0.001)
+  testthat::expect_equal(result_nlreval, result_sacrebleu, tolerance=0.001)
 
   result_sacrebleu <- 0.223606797749979
   ref_corpus <- list(c(1,2,3,4))
   cand_corpus <- c(1,2,3,5)
   result_nlreval <- bleu_sentence(ref_corpus, cand_corpus, n=4, smoothing="floor", epsilon=0.01)
-  checkmate::expect_equal(result_nlreval, result_sacrebleu, tolerance=0.001)
+  testthat::expect_equal(result_nlreval, result_sacrebleu, tolerance=0.001)
 })
 
 test_that("Tests Special cases", {
   result_nlreval <- bleu_corpus(list(), list())
-  checkmate::expect_equal(result_nlreval, 0.0)
+  testthat::expect_equal(result_nlreval, 0.0)
 })
 
 
@@ -81,6 +81,6 @@ test_that("Random Input", {
   n <- sample(1:100, 1)
   ref <- lapply(sample(5:20), generate_random_vectors, min=0, max=50000)
   cand <- generate_random_vectors(10, min=0, max=50000, m=16)
-  checkmate::expect_number(bleu_corpus(ref, cand))
-  checkmate::expect_number(bleu_corpus(ref, cand, n=4, smoothing="floor", epsilon=0.01))
+  testthat::expect_number(bleu_corpus(ref, cand))
+  testthat::expect_number(bleu_corpus(ref, cand, n=4, smoothing="floor", epsilon=0.01))
 })
