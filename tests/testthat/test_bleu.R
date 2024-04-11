@@ -24,23 +24,23 @@ test_that("Expect errors for wrong arguments", {
 })
 
 test_that("Expect number for `bleu_sentence`", {
-  testthat::expect_number(bleu_sentence(list(c(1,2,3), c(2,3,4)), c(1,2,3), n=2))
+  testthat::expect_vector(bleu_sentence(list(c(1,2,3), c(2,3,4)), c(1,2,3), n=2))
   ref_corpus <- list(c(1,2,3,4))
   cand_corpus <- c(1,2,3,5)
-  testthat::expect_number(bleu_sentence(list(c(1,2,3), c(2,3,4)), c(1,2,3), weights=c(0.33, 0.33, 0.33)))
-  testthat::expect_number(bleu_sentence(ref_corpus, cand_corpus, weights=c(0.25, 0.25, 0.25, 0.25)))
-  testthat::expect_number(bleu_sentence(ref_corpus, cand_corpus, n=4, smoothing="floor", epsilon=0.01))
-  testthat::expect_number(bleu_sentence(ref_corpus, cand_corpus, n=4, smoothing="add-k", k=1))
+  testthat::expect_vector(bleu_sentence(list(c(1,2,3), c(2,3,4)), c(1,2,3), weights=c(0.33, 0.33, 0.33)))
+  testthat::expect_vector(bleu_sentence(ref_corpus, cand_corpus, weights=c(0.25, 0.25, 0.25, 0.25)))
+  testthat::expect_vector(bleu_sentence(ref_corpus, cand_corpus, n=4, smoothing="floor", epsilon=0.01))
+  testthat::expect_vector(bleu_sentence(ref_corpus, cand_corpus, n=4, smoothing="add-k", k=1))
 })
 
 test_that("Expect number for `bleu_corpus`", {
-  testthat::expect_number(bleu_corpus(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), n=2))
+  testthat::expect_vector(bleu_corpus(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), n=2))
   ref_corpus <- list(list(c(1,2,3,4)))
   cand_corpus <- list(c(1,2,3,5))
-  testthat::expect_number(bleu_corpus(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), weights=c(0.33, 0.33, 0.33)))
-  testthat::expect_number(bleu_corpus(ref_corpus, cand_corpus, weights=c(0.25, 0.25, 0.25, 0.25)))
-  testthat::expect_number(bleu_corpus(ref_corpus, cand_corpus, n=4, smoothing="floor", epsilon=0.01))
-  testthat::expect_number(bleu_corpus(ref_corpus, cand_corpus, n=4, smoothing="add-k", k=1))
+  testthat::expect_vector(bleu_corpus(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), weights=c(0.33, 0.33, 0.33)))
+  testthat::expect_vector(bleu_corpus(ref_corpus, cand_corpus, weights=c(0.25, 0.25, 0.25, 0.25)))
+  testthat::expect_vector(bleu_corpus(ref_corpus, cand_corpus, n=4, smoothing="floor", epsilon=0.01))
+  testthat::expect_vector(bleu_corpus(ref_corpus, cand_corpus, n=4, smoothing="add-k", k=1))
 })
 
 test_that("NLTK & SacreBLEU Example", {
@@ -81,6 +81,6 @@ test_that("Random Input", {
   n <- sample(1:100, 1)
   ref <- lapply(sample(5:20), generate_random_vectors, min=0, max=50000)
   cand <- generate_random_vectors(10, min=0, max=50000, m=16)
-  testthat::expect_number(bleu_corpus(ref, cand))
-  testthat::expect_number(bleu_corpus(ref, cand, n=4, smoothing="floor", epsilon=0.01))
+  testthat::expect_vector(bleu_corpus(ref, cand))
+  testthat::expect_vector(bleu_corpus(ref, cand, n=4, smoothing="floor", epsilon=0.01))
 })
