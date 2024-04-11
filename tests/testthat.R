@@ -11,4 +11,4 @@ library(sacReBLEU)
 
 test_check("sacReBLEU")
 
-source("../../R/bleu.R") # This is only needed if your project is not a package
+# source("../../R/bleu.R") # This is only needed if your project is not a package
