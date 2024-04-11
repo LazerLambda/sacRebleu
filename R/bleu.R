@@ -73,7 +73,7 @@ bleu_sentence <- function(references, candidate, n = 4, weights = NULL, smoothin
 #' (https://aclanthology.org/W14-3346/).
 #'
 #' @param references A list of a list of reference sentences (`list(list(c(1,2,...)), list(c(3,5,...)))`).
-#' @param candidate A list of candidate sentences (`list(c(1,2,...), c(3,5,...))`).
+#' @param candidates A list of candidate sentences (`list(c(1,2,...), c(3,5,...))`).
 #' @param n N-gram for BLEU score (default is set to 4).
 #' @param weights Weights for the n-grams (default is set to 1/n for each entry).
 #' @param smoothing Smoothing method for BLEU score (default is set to 'standard', 'floor', 'add-k' available)

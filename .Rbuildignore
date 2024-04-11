@@ -1,3 +1,5 @@
 ^\.github$
 ^README\.Rmd$
 ^vignettes/articles$
+^doc$
+^Meta$

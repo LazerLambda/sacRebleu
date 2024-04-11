@@ -2,13 +2,34 @@
 title: "sacReBLEU"
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
+This package aims to provide metrics to evaluate generated text. To this point, only the BLEU (bilingual evaluation understudy) score, introduced by (Papineni et al., 2002)[https://aclanthology.org/P02-1040/],
+is available. The library is implemented in R and C++. The metrics are implemented on the base of previous tokenization, so that lists with tokenized sequences are evaluated.
 
-```{r setup}
+## BLEU Score
+
+The BLEU score is calculated based on the precision of n-grams (contiguous sequences of n items, usually words) in the machine-generated translation compared
+to the reference translations. It takes into account both the presence and the order of these n-grams, thus capturing not only lexical similarity but also
+syntactic and semantic correspondence.
+Mathematically, BLEU can be expressed as follows:
+
+\[
+BLEU = \text{{BP}} \times \exp\left(\sum_{n=1}^{N} \frac{1}{N} \log \text{{precision}}_n\right)
+\]
+
+Where \(\text{{BP}}\) is the brevity penalty, which penalizes overly short translations. It is defined as \(\exp(1 - \frac{{\text{{reference length}}}}{{\text{{output length}}}})\), \(N\)
+is the maximum n-gram order considered in the calculation.\(\text{{precision}}_n\) is the precision of n-grams, calculated as the ratio of the number of
+n-grams in the machine translation that appear in any of the reference translations to the total number of n-grams in the machine translation. and In summary,
+the BLEU score provides a single numerical value indicating the quality of a machine translation, with higher scores indicating better quality.
+
+
+## Smoothing
+
+
+## Known Drawbacks
+- Difficulties for morphologically rich languages such as turkish
+- Only syntax based, can easily be tricked
+
+## Example
+```
 library(sacReBLEU)
 ```
