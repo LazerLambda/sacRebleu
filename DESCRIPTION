@@ -10,14 +10,14 @@ Description: One paragraph description of what the package does as one
 License: GPL (>= 2)
 Imports: 
     checkmate,
-    Rcpp (>= 1.0.12)
+    Rcpp (>= 1.0.12),
+    testthat
 LinkingTo: Rcpp
 URL: https://github.com/LazerLambda/sacReBLEU
 BugReports: https://github.com/LazerLambda/sacReBLEU/issues
 Suggests: 
     knitr,
-    rmarkdown,
-    testthat (>= 3.0.0)
+    rmarkdown
 Config/testthat/edition: 3
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
