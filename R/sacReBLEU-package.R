@@ -9,7 +9,7 @@
 "_PACKAGE"
 
 ## usethis namespace: start
-# export(bleu_corpus)
-# export(bleu_sentence)
+# export(bleu_corpus_ids)
+# export(bleu_sentence_ids)
 ## usethis namespace: end
 NULL

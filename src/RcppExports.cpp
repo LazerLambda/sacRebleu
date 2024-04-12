@@ -10,9 +10,9 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// cpp_bleu_corpus
-NumericVector cpp_bleu_corpus(List references, List candidate, NumericVector weights, CharacterVector smoothing, double epsilon, int k);
-RcppExport SEXP _sacReBLEU_cpp_bleu_corpus(SEXP referencesSEXP, SEXP candidateSEXP, SEXP weightsSEXP, SEXP smoothingSEXP, SEXP epsilonSEXP, SEXP kSEXP) {
+// cpp_bleu_corpus_ids
+NumericVector cpp_bleu_corpus_ids(List references, List candidate, NumericVector weights, CharacterVector smoothing, double epsilon, int k);
+RcppExport SEXP _sacReBLEU_cpp_bleu_corpus_ids(SEXP referencesSEXP, SEXP candidateSEXP, SEXP weightsSEXP, SEXP smoothingSEXP, SEXP epsilonSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -22,13 +22,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< CharacterVector >::type smoothing(smoothingSEXP);
     Rcpp::traits::input_parameter< double >::type epsilon(epsilonSEXP);
     Rcpp::traits::input_parameter< int >::type k(kSEXP);
-    rcpp_result_gen = Rcpp::wrap(cpp_bleu_corpus(references, candidate, weights, smoothing, epsilon, k));
+    rcpp_result_gen = Rcpp::wrap(cpp_bleu_corpus_ids(references, candidate, weights, smoothing, epsilon, k));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_sacReBLEU_cpp_bleu_corpus", (DL_FUNC) &_sacReBLEU_cpp_bleu_corpus, 6},
+    {"_sacReBLEU_cpp_bleu_corpus_ids", (DL_FUNC) &_sacReBLEU_cpp_bleu_corpus_ids, 6},
     {NULL, NULL, 0}
 };
 

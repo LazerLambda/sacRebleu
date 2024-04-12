@@ -7,11 +7,11 @@
 validate_arguments(weights, smoothing, n)
 }
 \arguments{
-\item{weights}{Weight vector for `bleu_corpus` and `bleu_sentence` functions}
+\item{weights}{Weight vector for `bleu_corpus_ids` and `bleu_sentence_ids` functions}
 
-\item{smoothing}{Smoothing method for `bleu_corpus` and `bleu_sentence` functions}
+\item{smoothing}{Smoothing method for `bleu_corpus_ids` and `bleu_sentence_ids` functions}
 
-\item{n}{N-gram for `bleu_corpus` and `bleu_sentence` functions}
+\item{n}{N-gram for `bleu_corpus_ids` and `bleu_sentence_ids` functions}
 }
 \value{
 A list with the validated arguments (weights and smoothing)

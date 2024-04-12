@@ -372,7 +372,7 @@ static long double get_precision(vector<Fraction> fractions, string smoothing, l
  * @param k The k value for 'add-k' smoothing.
  * @return The BLEU score for the candidate sentence.
 */
-static long double bleu_corpus(vector<vector<vector<int>>> references, vector<vector<int>> candidate, vector<float> weights, string smoothing, long double epsilon, int k) {
+static long double bleu_corpus_ids(vector<vector<vector<int>>> references, vector<vector<int>> candidate, vector<float> weights, string smoothing, long double epsilon, int k) {
     long double collector = 0.0;
     int corpus_clos_ref_len_coll = 0;
     int corpus_cand_len_coll = 0;
@@ -401,7 +401,7 @@ static long double bleu_corpus(vector<vector<vector<int>>> references, vector<ve
 /**
  * @brief Calculates the BLEU score for a list of a corpus.
  * 
- * Wrapper for the `bleu_corpus` function to cast R datatypes to C++ datatypes.
+ * Wrapper for the `bleu_corpus_ids` function to cast R datatypes to C++ datatypes.
  * 
  * @param references The list of reference sentences to compare against.
  * @param candidate The candidate sentence to calculate BLEU score for.
@@ -411,8 +411,8 @@ static long double bleu_corpus(vector<vector<vector<int>>> references, vector<ve
  * @param k The k value for 'add-k' smoothing.
  * @return The BLEU score for the candidate sentence.
 */
-// [[Rcpp::export(".cpp_bleu_corpus")]]
-NumericVector cpp_bleu_corpus(List references, List candidate, NumericVector weights, CharacterVector smoothing, double epsilon, int k){
+// [[Rcpp::export(".cpp_bleu_corpus_ids")]]
+NumericVector cpp_bleu_corpus_ids(List references, List candidate, NumericVector weights, CharacterVector smoothing, double epsilon, int k){
     if (!references.length() || !candidate.length()) {
         return wrap(0.0);
     }
@@ -424,5 +424,5 @@ NumericVector cpp_bleu_corpus(List references, List candidate, NumericVector wei
     vector<float> weights_vec = as<vector<float>>(weights);
     string smoothing_str = as<string>(smoothing);
 
-    return(wrap(bleu_corpus(ref, cand, weights_vec, smoothing_str, (long double) epsilon, k)));
+    return(wrap(bleu_corpus_ids(ref, cand, weights_vec, smoothing_str, (long double) epsilon, k)));
 }

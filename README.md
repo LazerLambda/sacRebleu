@@ -30,5 +30,5 @@ This is a basic example which shows you how to solve a common problem:
 library(sacReBLEU)
 ref_corpus <- list(c(1,2,3,4))
 cand_corpus <- c(1,2,3,5)
-bleu_standard <- bleu_sentence(ref_corpus, cand_corpus)
+bleu_standard <- bleu_sentence_ids(ref_corpus, cand_corpus)
 ```
