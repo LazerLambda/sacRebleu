@@ -26,7 +26,7 @@ validate_arguments <- function(weights, smoothing, n) {
 
 
 #' Validate References
-#' 
+#'
 #' @param references A list of reference sentences.
 #' @param target A vector of target lengths.
 #' @returns A boolean value indicating if the references are valid.
@@ -107,7 +107,10 @@ bleu_sentence_ids <- function(references, candidate, n = 4, weights = NULL, smoo
 bleu_corpus_ids <- function(references, candidates, n = 4, weights = NULL, smoothing = NULL, epsilon = 0.1, k = 1) {
   checkmate::assert_list(references)
   checkmate::assert_true(validate_references(references, c("list")))
-  checkmate::assert_true(Reduce(function(acc, e) validate_references(e, c("numeric", "integer")) && acc, references, TRUE))
+  checkmate::assert_true(Reduce(
+                                function(acc, e) validate_references(e, c("numeric", "integer")) && acc,
+                                references,
+                                TRUE))
   checkmate::assert_list(candidates)
   checkmate::assert_true(validate_references(candidates, c("numeric", "integer")))
   checkmate::assert_true(length(references) == length(candidates))
@@ -125,11 +128,13 @@ bleu_corpus_ids <- function(references, candidates, n = 4, weights = NULL, smoot
 # Compute BLEU for a Corpus with Tokenization
 #
 #' This function applies tokenization based on the 'tok' library and computes the BLEU score.
-#' An already initializied tokenizer can be provided using the `tokenizer` argument or a valid huggingface identifier (string) can
-#' be passed. If only the identifier is used, the tokenizer is newly initialized on every call.
+#' An already initializied tokenizer can be provided using the `tokenizer`argument or
+#' a valid huggingface identifier (string) can be passed. If the identifier is used only,
+#' the tokenizer is newly initialized on every call.
 #' @param references A list of a list of reference sentences (`list(list(c(1,2,...)), list(c(3,5,...)))`).
 #' @param candidates A list of candidate sentences (`list(c(1,2,...), c(3,5,...))`).
-#' @param tokenizer Either an already initialized 'tok' tokenizer object or a huggingface identifier (default is 'bert-base-uncased')
+#' @param tokenizer Either an already initialized 'tok' tokenizer object or a
+#' huggingface identifier (default is 'bert-base-uncased')
 #' @param n N-gram for BLEU score (default is set to 4).
 #' @param weights Weights for the n-grams (default is set to 1/n for each entry).
 #' @param smoothing Smoothing method for BLEU score (default is set to 'standard', 'floor', 'add-k' available)
@@ -139,40 +144,55 @@ bleu_corpus_ids <- function(references, candidates, n = 4, weights = NULL, smoot
 #' @returns The BLEU score for the candidate sentence.
 #' @export
 #' @examples
-#' 
-bleu_corpus <- function(references, candidates, tokenizer="bert-base-uncased", n = 4, weights = NULL, smoothing = NULL, epsilon = 0.1, k = 1) {
+#' cand_corpus <- list("This is good", "This is not good")
+#' ref_corpus <- list(list("Perfect outcome!", "Excellent!"), list("Not sufficient.", "Horrible."))
+#' bleu_corpus <- bleu_corpus(ref_corpus, cand_corpus)
+bleu_corpus <- function(
+    references,
+    candidates,
+    tokenizer = "bert-base-uncased",
+    n = 4,
+    weights = NULL,
+    smoothing = NULL,
+    epsilon = 0.1,
+    k = 1) {
   checkmate::assert_list(references)
   checkmate::assert_true(validate_references(references, c("list")))
   checkmate::assert_true(Reduce(function(acc, e) validate_references(e, c("character")) && acc, references, TRUE))
   checkmate::assert_list(candidates)
-  checkmate::assert_true(validate_references(candidates, c("character"))) 
+  checkmate::assert_true(validate_references(candidates, c("character")))
   if (class(tokenizer)[[1]] != "tok_tokenizer" && class(tokenizer)[[1]] != "character") {
-    stop("ERROR: `tokenizer` argument must be either an identifier string for the `tok` package or a 'tok_tokenizer' object!")
+    stop(c(
+           "ERROR: `tokenizer` argument must be either an identifier ",
+           "string for the `tok` package or a 'tok_tokenizer' object!"))
   }
   if (class(tokenizer)[[1]] == "character") {
     tokenizer <- tok::tokenizer$from_pretrained(tokenizer)
   }
   cand_ids <- lapply(
-    candidates,
-    function(cand) tokenizer$encode(cand)$ids)
+                     candidates,
+                     function(cand) tokenizer$encode(cand)$ids)
   ref_ids <- lapply(
-    references,
-    function(references_local) lapply(
-      references_local,
-      function(e){tokenizer$encode(e)$ids}))
+                    references,
+                    function(references_local) {
+                                                lapply(
+                                                       references_local,
+                                                       function(e) tokenizer$encode(e)$ids)})
   bleu_corpus_ids(ref_ids, cand_ids, n, weights, smoothing, epsilon, k)
 }
 
 
 
 #' Compute BLEU for a Sentence with Tokenization
-#' 
+#'
 #' This function applies tokenization based on the 'tok' library and computes the BLEU score.
-#' An already initializied tokenizer can be provided using the `tokenizer` argument or a valid huggingface identifier (string) can
-#' be passed. If only the identifier is used, the tokenizer is newly initialized on every call.
+#' An already initializied tokenizer can be provided using the `tokenizer` argument or
+#' a valid huggingface identifier (string) can be passed. If the identifier is used only,
+#' the tokenizer is newly initialized on every call.
 #' @param references A list of reference sentences.
 #' @param candidate A candidate sentence.
-#' @param tokenizer Either an already initialized 'tok' tokenizer object or a huggingface identifier (default is 'bert-base-uncased')
+#' @param tokenizer Either an already initialized 'tok' tokenizer object or a
+#' huggingface identifier (default is 'bert-base-uncased')
 #' @param n N-gram for BLEU score (default is set to 4).
 #' @param weights Weights for the n-grams (default is set to 1/n for each entry).
 #' @param smoothing Smoothing method for BLEU score (default is set to 'standard', 'floor', 'add-k' available)
@@ -185,20 +205,30 @@ bleu_corpus <- function(references, candidates, tokenizer="bert-base-uncased", n
 #' cand <- "Hello World!"
 #' ref <- list("Hello everyone.", "Hello Planet", "Hello World")
 #' bleu_standard <- bleu_sentence(ref, cand)
-bleu_sentence <- function(references, candidate, tokenizer="bert-base-uncased", n = 4, weights = NULL, smoothing = NULL, epsilon = 0.1, k = 1) {
+bleu_sentence <- function(
+    references,
+    candidate,
+    tokenizer = "bert-base-uncased",
+    n = 4,
+    weights = NULL,
+    smoothing = NULL,
+    epsilon = 0.1,
+    k = 1) {
   checkmate::assert_character(candidate)
   checkmate::assert_list(references)
   checkmate::assert_true(validate_references(references, c("character")))
 
   if (class(tokenizer)[[1]] != "tok_tokenizer" && class(tokenizer)[[1]] != "character") {
-    stop("ERROR: `tokenizer` argument must be either an identifier string for the `tok` package or a 'tok_tokenizer' object!")
+    stop(c(
+           "ERROR: `tokenizer` argument must be either an identifier ",
+           "string for the `tok` package or a 'tok_tokenizer' object!"))
   }
   if (class(tokenizer)[[1]] == "character") {
     tokenizer <- tok::tokenizer$from_pretrained(tokenizer)
   }
   cand_ids <- tokenizer$encode(candidate)$ids
   ref_ids <- lapply(
-    references,
-    function(reference) tokenizer$encode(reference)$ids)
+                    references,
+                    function(reference) tokenizer$encode(reference)$ids)
   bleu_sentence_ids(ref_ids, cand_ids, n, weights, smoothing, epsilon, k)
 }
