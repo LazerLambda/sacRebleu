@@ -25,6 +25,16 @@ validate_arguments <- function(weights, smoothing, n) {
 }
 
 
+#' Validate References
+#' 
+#' @param references A list of reference sentences.
+#' @param target A vector of target lengths.
+#' @returns A boolean value indicating if the references are valid.
+validate_references <- function(references, target) {
+  return(Reduce(function(acc, e) (class(e) %in% target) && acc, references, TRUE))
+}
+
+
 
 #' Computes BLEU-Score (Papineni et al., 2002).
 #'
@@ -96,8 +106,10 @@ bleu_sentence_ids <- function(references, candidate, n = 4, weights = NULL, smoo
 #' bleu_corpus_ids_add_k <- bleu_corpus_ids(ref_corpus, cand_corpus, smoothing="add-k", k=1)
 bleu_corpus_ids <- function(references, candidates, n = 4, weights = NULL, smoothing = NULL, epsilon = 0.1, k = 1) {
   checkmate::assert_list(references)
-  checkmate::assert_true(Reduce(function(acc, e) (class(e) == "list") && acc, references, TRUE))
-  checkmate::assert_true(Reduce(function(acc, e) (class(e) %in% c("numeric", "integer")) && acc, candidates, TRUE))
+  checkmate::assert_true(validate_references(references, c("list")))
+  checkmate::assert_true(Reduce(function(acc, e) validate_references(e, c("numeric", "integer")) && acc, references, TRUE))
+  checkmate::assert_list(candidates)
+  checkmate::assert_true(validate_references(candidates, c("numeric", "integer")))
   checkmate::assert_true(length(references) == length(candidates))
   checkmate::assert_numeric(n)
   checkmate::assert_true(n > 0 && n %% 1 == 0)
@@ -129,6 +141,11 @@ bleu_corpus_ids <- function(references, candidates, n = 4, weights = NULL, smoot
 #' @examples
 #' 
 bleu_corpus <- function(references, candidates, tokenizer="bert-base-uncased", n = 4, weights = NULL, smoothing = NULL, epsilon = 0.1, k = 1) {
+  checkmate::assert_list(references)
+  checkmate::assert_true(validate_references(references, c("list")))
+  checkmate::assert_true(Reduce(function(acc, e) validate_references(e, c("character")) && acc, references, TRUE))
+  checkmate::assert_list(candidates)
+  checkmate::assert_true(validate_references(candidates, c("character"))) 
   if (class(tokenizer)[[1]] != "tok_tokenizer" && class(tokenizer)[[1]] != "character") {
     stop("ERROR: `tokenizer` argument must be either an identifier string for the `tok` package or a 'tok_tokenizer' object!")
   }
@@ -148,9 +165,31 @@ bleu_corpus <- function(references, candidates, tokenizer="bert-base-uncased", n
 
 
 
-#' Compute 
+#' Compute BLEU for a Sentence with Tokenization
 #' 
+#' This function applies tokenization based on the 'tok' library and computes the BLEU score.
+#' An already initializied tokenizer can be provided using the `tokenizer` argument or a valid huggingface identifier (string) can
+#' be passed. If only the identifier is used, the tokenizer is newly initialized on every call.
+#' @param references A list of reference sentences.
+#' @param candidate A candidate sentence.
+#' @param tokenizer Either an already initialized 'tok' tokenizer object or a huggingface identifier (default is 'bert-base-uncased')
+#' @param n N-gram for BLEU score (default is set to 4).
+#' @param weights Weights for the n-grams (default is set to 1/n for each entry).
+#' @param smoothing Smoothing method for BLEU score (default is set to 'standard', 'floor', 'add-k' available)
+#' @param epsilon Epsilon value for epsilon-smoothing (default is set to 0.1).
+#' @param k K value for add-k-smoothing (default is set to 1).
+#'
+#' @returns The BLEU score for the candidate sentence.
+#' @export
+#' @examples
+#' cand <- "Hello World!"
+#' ref <- list("Hello everyone.", "Hello Planet", "Hello World")
+#' bleu_standard <- bleu_sentence(ref, cand)
 bleu_sentence <- function(references, candidate, tokenizer="bert-base-uncased", n = 4, weights = NULL, smoothing = NULL, epsilon = 0.1, k = 1) {
+  checkmate::assert_character(candidate)
+  checkmate::assert_list(references)
+  checkmate::assert_true(validate_references(references, c("character")))
+
   if (class(tokenizer)[[1]] != "tok_tokenizer" && class(tokenizer)[[1]] != "character") {
     stop("ERROR: `tokenizer` argument must be either an identifier string for the `tok` package or a 'tok_tokenizer' object!")
   }

@@ -1,4 +1,7 @@
 library(testthat)
+library(tok)
+
+
 cand_corpus <- list(c(1,2,3), c(1,2))
 ref_corpus <- list(list(c(1,2,3), c(2,3,4)), list(c(1,2,6), c(781, 21, 9), c(7, 3)))
 
@@ -83,4 +86,26 @@ test_that("Random Input", {
   cand <- generate_random_vectors(10, min=0, max=50000, m=16)
   testthat::expect_vector(bleu_corpus_ids(ref, cand))
   testthat::expect_vector(bleu_corpus_ids(ref, cand, n=4, smoothing="floor", epsilon=0.01))
+})
+
+test_that("Test With Tokenizer", {
+  cand <- "Hello World!"
+  ref <- list("Hello everyone.", "Hello Planet", "Hello World")
+  testthat::expect_vector(bleu_sentence(ref, cand))
+  testthat::expect_vector(bleu_corpus(list(ref), list(cand)))
+
+  tok <- tok::tokenizer$from_pretrained("bert-base-uncased")
+  testthat::expect_vector(bleu_sentence(ref, cand, tokenizer=tok))
+})
+
+test_that("Expect Errors with Tokenizer Functions", {
+  cand <- "Hello World!"
+  ref <- list("Hello everyone.", "Hello Planet", "Hello World")
+  testthat::expect_error(bleu_sentence(ref, 1))
+  testthat::expect_error(bleu_sentence(2, ""))
+  testthat::expect_error(bleu_corpus(ref, cand))
+  testthat::expect_error(bleu_corpus(list(ref), cand))
+  testthat::expect_error(bleu_corpus(ref, list(cand)))
+  testthat::expect_error(bleu_corpus(0, list(cand)))
+  testthat::expect_error(bleu_corpus(list(ref), 0))
 })
