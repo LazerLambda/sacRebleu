@@ -3,3 +3,4 @@
 ^vignettes/articles$
 ^doc$
 ^Meta$
+^.lintr

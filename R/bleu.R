@@ -101,7 +101,7 @@ bleu_sentence_ids <- function(references, candidate, n = 4, weights = NULL, smoo
 #' @examples
 #' cand_corpus <- list(c(1,2,3), c(1,2))
 #' ref_corpus <- list(list(c(1,2,3), c(2,3,4)), list(c(1,2,6), c(781, 21, 9), c(7, 3)))
-#' bleu_corpus_ids_standard <- bleu_corpus_ids(ref_corpus, cand_corpus, weights=c(0.3333, 0.3333, 0.3333))
+#' bleu_corpus_ids_standard <- bleu_corpus_ids(ref_corpus, cand_corpus)
 #' bleu_corpus_ids_floor <- bleu_corpus_ids(ref_corpus, cand_corpus, smoothing="floor", epsilon=0.01)
 #' bleu_corpus_ids_add_k <- bleu_corpus_ids(ref_corpus, cand_corpus, smoothing="add-k", k=1)
 bleu_corpus_ids <- function(references, candidates, n = 4, weights = NULL, smoothing = NULL, epsilon = 0.1, k = 1) {

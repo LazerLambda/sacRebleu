@@ -1,6 +1,4 @@
-
 #include <iostream>
-// #include <math.h> 
 #include <cmath>
 #include <set>
 #include <tuple>
@@ -29,7 +27,7 @@ using namespace Rcpp;
  */
 string concatenate(vector<int> vec) {
     string result = "";
-    for (int i = 0; i < vec.size(); i++)
+    for (int i = 0; i < (int) vec.size(); i++)
         result += to_string(vec[i]) + "_";
     return result;
 }
@@ -80,7 +78,7 @@ static unordered_map<string, int> iterate_references_n_gram(vector<vector<int>> 
         throw invalid_argument( "`n` must be larger than 0!" );
     }
     unordered_map<string, int> counter;
-    for (int i = 0; i < references.size(); i++) {
+    for (int i = 0; i < (int) references.size(); i++) {
         unordered_map <string, int> counter_inner = collect_n_grams(references[i], n);
         for (const auto &pair : counter_inner) {
             if (counter.find(pair.first) != counter_inner.end()) {
@@ -220,7 +218,7 @@ static Fraction n_gram_precision(vector<vector<int>> references, vector<int> can
 static int closest_ref_len(int cand_len, vector<int> ref_len) {
     int min_diff = abs(cand_len - ref_len[0]);
     int closest = ref_len[0];
-    for (int i = 1; i < ref_len.size(); i++) {
+    for (int i = 1; i < (int) ref_len.size(); i++) {
         int diff = abs(cand_len - ref_len[i]);
         if (diff < min_diff) {
             min_diff = diff;
@@ -271,40 +269,11 @@ static long double brevity_penalty(int ref_len, int cand_len) {
 static long double brevity_penalty_single(vector<vector<int>> references, vector<int> candidate){
     int cand_len = candidate.size();
     vector<int> lengths;
-    transform(references.begin(), references.end(), back_inserter(lengths), [](const vector<int>& v) { return v.size(); });
+    transform(references.begin(), references.end(), back_inserter(lengths), [](const vector<int>& v) { return (int) v.size(); });
     int ref_len = closest_ref_len(cand_len, lengths);
     return brevity_penalty(ref_len, cand_len);
 }
 
-/**
- * @brief Calculates the BLEU score for a candidate sentence.
- * 
- * This function takes a vector of vectors of integers representing reference
- * sentences, a vector of integers representing a candidate sentence, a vector
- * of floats representing the weights for each n-gram, and a string representing
- * the smoothing method to use as input. The function calculates the BLEU score
- * for the candidate sentence based on the reference sentences, weights, and smoothing
- * method. The BLEU score is calculated as the brevity penalty multiplied by the
- * exponential of the sum of the weighted log precisions for each n-gram. Implementation
- * based on Papineni et al. (2002) https://aclanthology.org/P02-1040/.
- * 
- * @param references The list of reference sentences to compare against.
- * @param candidate The candidate sentence to calculate BLEU score for.
- * @param weights The list of weights for each n-gram.
- * @param smoothing The smoothing method to use for precision calculation.
- * @return The BLEU score for the candidate sentence.
- */
-static long double bleu(vector<vector<int>> references, vector<int> candidate, vector<float> weights, string smoothing) {
-    long double collector = 0.0;
-    int n = weights.size();
-    for (int i = 0; i < n; i++) {
-        Fraction precision_frac = n_gram_precision(references, candidate, i + 1);
-        long double precision  = (long double) precision_frac.numerator / (long double) precision_frac.denominator;
-        collector += weights[i] * log(precision);
-    }
-    long double bp = brevity_penalty_single(references, candidate);
-    return bp * exp(collector);
-}
 
 /**
  * @brief Calculates the Precision over a list of fractions.
@@ -326,7 +295,7 @@ static long double get_precision(vector<Fraction> fractions, string smoothing, l
     long double collector_num = 0.0;
     long double collector_denom = 0.0;
     long double precision = 0.0;
-    for (int i = 0; i < fractions.size(); i++) {
+    for (int i = 0; i < (int) fractions.size(); i++) {
         if (smoothing == "standard") {
             collector_num += (long double) fractions[i].numerator;
             collector_denom += (long double) fractions[i].denominator;
@@ -379,13 +348,13 @@ static long double bleu_corpus_ids(vector<vector<vector<int>>> references, vecto
     int n = weights.size();
     for (int i = 0; i < n; i++) {
         vector<Fraction> fractions; 
-        for (int j = 0; j < candidate.size(); j++) {
+        for (int j = 0; j < (int) candidate.size(); j++) {
             Fraction precision_frac = n_gram_precision(references[j], candidate[j], i + 1);
             fractions.push_back(precision_frac);
             if(i == 0){
-                int cand_len = candidate[j].size();
+                int cand_len = (int) candidate[j].size();
                 vector<int> lengths;
-                transform(references[j].begin(), references[j].end(), back_inserter(lengths), [](const vector<int>& v) { return v.size(); });
+                transform(references[j].begin(), references[j].end(), back_inserter(lengths), [](const vector<int>& v) { return (int) v.size(); });
                 int ref_len = closest_ref_len(cand_len, lengths);
                 corpus_clos_ref_len_coll += ref_len;
                 corpus_cand_len_coll += cand_len;
