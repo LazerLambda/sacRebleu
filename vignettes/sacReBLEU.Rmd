@@ -14,6 +14,101 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+This package aims to provide metrics to evaluate generated text. To this point, only the BLEU (bilingual evaluation understudy) score, introduced by [Papineni et al., 2002](https://aclanthology.org/P02-1040/),
+is available. The library is implemented in R and C++. The metrics are implemented on the base of previous tokenization, so that lists with tokenized sequences are evaluated.
+This package is inspired by the [NLTK](https://www.nltk.org/) and [sacrebleu](https://github.com/mjpost/sacrebleu) implementation for Python.
+
+# BLEU Score
+The BLEU-score is a metric used to evaluate the quality of machine-generated texts by comparing them to
+reference texts. It is calculated based on the precision of n-grams, which are contiguous sequences of n items, typically words.
+
+Mathematically, BLEU can be expressed as follows:
+
+\[
+BLEU = \text{{BP}} \times \exp\left(\sum_{n=1}^{N} \frac{1}{N} \log \text{{precision}}_n\right)
+\]
+
+Where:
+ - \(\text{{BP}}\) is the brevity penalty, which penalizes if the candidate text is shorter than the reference texts.
+   It is defined as \(\exp(1 - \frac{{\text{{reference length}}}}{{\text{{output length}}}})\).
+ - \(N\) is the maximum n-gram order considered in the calculation.
+ - \(\text{{precision}}_n\) is the precision of n-grams, calculated as the ratio of the number of
+   n-grams in the candidate text that appear in any of the reference texts to the total number of n-grams in the candidate text.
+
+\(\text{{precision}}_n\) is defined as the following:
+\[
+precision_n = \frac{\sum_{c \in \text{Cand}} ngram_{\text{clip}}(c)}{\sum_{r \in \text{Ref}_{\text{Cand}}} ngram(r)}
+\]
+
+Where $ngram_{\text{clip}}$ represents the count of n-grams in the candidate text that appear in any of the reference texts, while $ngram$ stands
+for the total number of n-grams in the candidate sentence, ensuring they do not exceed the count of the reference n-grams. This procedure is
+repeated for all 1 to N-grams.
+
+
+In summary, the BLEU score provides a single numerical value indicating the quality of a candidate text, with higher scores indicating better quality.
+
+
+# Smoothing
+This package provides two smoothing techniques from [Chen et al., 2014](https://aclanthology.org/W14-3346/). The methods available in this
+package are `floor` and `add-k`.
+
+## `floor`
+The precision of BLEU is calculated by dividing the sum of the n-grams. However, in some cases, the count of certain n-grams may be zero. To address
+this issue, a small value (denoted as $\epsilon$) is added to the numerator of the precision calculation when the count is zero.
+
+## `add-k`
+Similar to the motivation behind the `floor` method, the `add-k` smoothing technique involves adding an integer value ($k$) to the overall sum of
+the numerator and the denominator of the precision calculation for each 1..N-gram.
+
+# Example
+
+First, we need to download the data. The repository of [Freitag et al., 2020](https://github.com/google/wmt19-paraphrased-references) offers additional reference translations
+for some WMT datasets.
+```{R}
+download.file("https://github.com/google/wmt19-paraphrased-references/raw/master/wmt19/ende/wmt19-ende-ar.ref", "wmt19-ende-ar.ref", method="wget")
+download.file("https://github.com/google/wmt19-paraphrased-references/raw/master/wmt19/ende/wmt19-ende-arp.ref", "wmt19-ende-arp.ref", method="wget")
+download.file("https://github.com/google/wmt19-paraphrased-references/raw/master/wmt19/ende/wmt19-ende-wmtp.ref", "wmt19-ende-wmtp.ref", method="wget")
+```
+
+```{R}
+ar <- readLines("/home/philko/Documents/Projects/Reval/wmt19-ende-ar.ref")
+arp <- readLines("/home/philko/Documents/Projects/Reval/wmt19-ende-arp.ref")
+wmtp <- readLines("/home/philko/Documents/Projects/Reval/wmt19-ende-wmtp.ref")
+```
+
+Now, we need to bring the candidate and reference sentences into the correct format:
+```{r}
+references <- list()
+for (i in seq_along(ar)){
+  references[[i]] <- list(ar[[i]], arp[[i]])
+}
+```
+And compute the BLEU-score for the entire corpus:
+```{r}
 library(sacReBLEU)
+bleu_corpus(references=references, candidates = list(wmtp), n=4)
+```
+
+ere, tokenization occurs within the function. However, it's also possible to compute BLEU on already tokenized lists using the `bleu_corpus_ids`
+function. To employ this function in this example, we first need to tokenize the data. The [`tok`](https://cran.r-project.org/web/packages/tok/index.html) package (available on CRAN) offers the
+Hugging Face tokenizers, which we'll utilize:
+```{r}
+library(tok)
+
+tok <- tok::tokenizer$from_pretrained("bert-base-uncased")
+ar_ids <- lapply(ar, function(e){tok$encode(e)$ids})
+arp_ids <- lapply(arp, function(e){tok$encode(e)$ids})
+wmtp_ids <- lapply(wmtp, function(e){tok$encode(e)$ids})
+```
+As above, the reference sentences must be lists of lists of the references but with the distinction, that the references are repreented as numbers:
+```{r}
+references_ids <- list()
+for (i in seq_along(ar)){
+  references_ids[[i]] <- list(ar_ids[[i]], arp_ids[[i]])
+}
+```
+
+Now, we can compute the BLEU score:
+```{r}
+bleu_corpus_ids(references=references_ids, candidates = wmtp_ids, n=4)
 ```

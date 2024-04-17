@@ -170,7 +170,7 @@ bleu_corpus <- function(
     tokenizer <- tok::tokenizer$from_pretrained(tokenizer)
   }
   cand_ids <- lapply(
-                     candidates,
+                     unlist(candidates),
                      function(cand) tokenizer$encode(cand)$ids)
   ref_ids <- lapply(
                     references,
