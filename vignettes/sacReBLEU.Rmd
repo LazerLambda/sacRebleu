@@ -65,15 +65,15 @@ the numerator and the denominator of the precision calculation for each 1..N-gra
 First, we need to download the data. The repository of [Freitag et al., 2020](https://github.com/google/wmt19-paraphrased-references) offers additional reference translations
 for some WMT datasets.
 ```{R}
-download.file("https://github.com/google/wmt19-paraphrased-references/raw/master/wmt19/ende/wmt19-ende-ar.ref", "wmt19-ende-ar.ref", method="wget")
-download.file("https://github.com/google/wmt19-paraphrased-references/raw/master/wmt19/ende/wmt19-ende-arp.ref", "wmt19-ende-arp.ref", method="wget")
-download.file("https://github.com/google/wmt19-paraphrased-references/raw/master/wmt19/ende/wmt19-ende-wmtp.ref", "wmt19-ende-wmtp.ref", method="wget")
+download.file("https://github.com/google/wmt19-paraphrased-references/raw/master/wmt19/ende/wmt19-ende-ar.ref", "wmt19-ende-ar.ref")
+download.file("https://github.com/google/wmt19-paraphrased-references/raw/master/wmt19/ende/wmt19-ende-arp.ref", "wmt19-ende-arp.ref")
+download.file("https://github.com/google/wmt19-paraphrased-references/raw/master/wmt19/ende/wmt19-ende-wmtp.ref", "wmt19-ende-wmtp.ref")
 ```
 
 ```{R}
-ar <- readLines("/home/philko/Documents/Projects/Reval/wmt19-ende-ar.ref")
-arp <- readLines("/home/philko/Documents/Projects/Reval/wmt19-ende-arp.ref")
-wmtp <- readLines("/home/philko/Documents/Projects/Reval/wmt19-ende-wmtp.ref")
+ar <- readLines("wmt19-ende-ar.ref")
+arp <- readLines("wmt19-ende-arp.ref")
+wmtp <- readLines("wmt19-ende-wmtp.ref")
 ```
 
 Now, we need to bring the candidate and reference sentences into the correct format:
