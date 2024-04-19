@@ -253,29 +253,6 @@ static long double brevity_penalty(int ref_len, int cand_len) {
 }
 
 /**
- * @brief Calculates the brevity penalty for a candidate sentence.
- * 
- * This function takes a vector of vectors of integers representing reference
- * sentences and a vector of integers representing a candidate sentence as input.
- * The function calculates the brevity penalty for the candidate sentence based on
- * the reference sentences. The brevity penalty is calculated as the exponential of
- * 1 minus the ratio of the reference length to the candidate length. Implementation
- * based on Papineni et al. (2002) https://aclanthology.org/P02-1040/.
- * 
- * @param references The list of reference sentences to compare against.
- * @param candidate The candidate sentence to calculate brevity penalty for.
- * @return The brevity penalty for the candidate sentence.
- */
-static long double brevity_penalty_single(vector<vector<int>> references, vector<int> candidate){
-    int cand_len = candidate.size();
-    vector<int> lengths;
-    transform(references.begin(), references.end(), back_inserter(lengths), [](const vector<int>& v) { return (int) v.size(); });
-    int ref_len = closest_ref_len(cand_len, lengths);
-    return brevity_penalty(ref_len, cand_len);
-}
-
-
-/**
  * @brief Calculates the Precision over a list of fractions.
  * 
  * This function takes a vector of Fractions, a string representing the smoothing method,

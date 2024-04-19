@@ -95,7 +95,7 @@ Hugging Face tokenizers, which we'll utilize:
 ```{r}
 library(tok)
 
-tok <- tok::tokenizer$from_pretrained("bert-base-uncased")
+tok <- tok::tokenizer$from_pretrained("bert-base-cased")
 ar_ids <- lapply(ar, function(e){tok$encode(e)$ids})
 arp_ids <- lapply(arp, function(e){tok$encode(e)$ids})
 wmtp_ids <- lapply(wmtp, function(e){tok$encode(e)$ids})

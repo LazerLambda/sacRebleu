@@ -134,7 +134,7 @@ bleu_corpus_ids <- function(references, candidates, n = 4, weights = NULL, smoot
 #' @param references A list of a list of reference sentences (`list(list(c(1,2,...)), list(c(3,5,...)))`).
 #' @param candidates A list of candidate sentences (`list(c(1,2,...), c(3,5,...))`).
 #' @param tokenizer Either an already initialized 'tok' tokenizer object or a
-#' huggingface identifier (default is 'bert-base-uncased')
+#' huggingface identifier (default is 'bert-base-cased')
 #' @param n N-gram for BLEU score (default is set to 4).
 #' @param weights Weights for the n-grams (default is set to 1/n for each entry).
 #' @param smoothing Smoothing method for BLEU score (default is set to 'standard', 'floor', 'add-k' available)
@@ -150,7 +150,7 @@ bleu_corpus_ids <- function(references, candidates, n = 4, weights = NULL, smoot
 bleu_corpus <- function(
     references,
     candidates,
-    tokenizer = "bert-base-uncased",
+    tokenizer = "bert-base-cased",
     n = 4,
     weights = NULL,
     smoothing = NULL,
@@ -192,7 +192,7 @@ bleu_corpus <- function(
 #' @param references A list of reference sentences.
 #' @param candidate A candidate sentence.
 #' @param tokenizer Either an already initialized 'tok' tokenizer object or a
-#' huggingface identifier (default is 'bert-base-uncased')
+#' huggingface identifier (default is 'bert-base-cased')
 #' @param n N-gram for BLEU score (default is set to 4).
 #' @param weights Weights for the n-grams (default is set to 1/n for each entry).
 #' @param smoothing Smoothing method for BLEU score (default is set to 'standard', 'floor', 'add-k' available)
@@ -208,7 +208,7 @@ bleu_corpus <- function(
 bleu_sentence <- function(
     references,
     candidate,
-    tokenizer = "bert-base-uncased",
+    tokenizer = "bert-base-cased",
     n = 4,
     weights = NULL,
     smoothing = NULL,

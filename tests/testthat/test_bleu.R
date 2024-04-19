@@ -94,7 +94,7 @@ test_that("Test With Tokenizer", {
   testthat::expect_vector(bleu_sentence(ref, cand))
   testthat::expect_vector(bleu_corpus(list(ref), list(cand)))
 
-  tok <- tok::tokenizer$from_pretrained("bert-base-uncased")
+  tok <- tok::tokenizer$from_pretrained("bert-base-cased")
   testthat::expect_vector(bleu_sentence(ref, cand, tokenizer=tok))
 })
 
