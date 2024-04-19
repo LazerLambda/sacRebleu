@@ -12,7 +12,7 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 
 // cpp_bleu_corpus_ids
 NumericVector cpp_bleu_corpus_ids(List references, List candidate, NumericVector weights, CharacterVector smoothing, double epsilon, int k);
-RcppExport SEXP _sacReBLEU_cpp_bleu_corpus_ids(SEXP referencesSEXP, SEXP candidateSEXP, SEXP weightsSEXP, SEXP smoothingSEXP, SEXP epsilonSEXP, SEXP kSEXP) {
+RcppExport SEXP _sacRebleu_cpp_bleu_corpus_ids(SEXP referencesSEXP, SEXP candidateSEXP, SEXP weightsSEXP, SEXP smoothingSEXP, SEXP epsilonSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -28,11 +28,11 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_sacReBLEU_cpp_bleu_corpus_ids", (DL_FUNC) &_sacReBLEU_cpp_bleu_corpus_ids, 6},
+    {"_sacRebleu_cpp_bleu_corpus_ids", (DL_FUNC) &_sacRebleu_cpp_bleu_corpus_ids, 6},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_sacReBLEU(DllInfo *dll) {
+RcppExport void R_init_sacRebleu(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

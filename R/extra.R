@@ -1,4 +1,4 @@
 #' @importFrom Rcpp evalCpp
 #' @exportPattern "^[[:alpha:]]+"
-#' @useDynLib sacReBLEU, .registration=TRUE
+#' @useDynLib sacRebleu, .registration=TRUE
 NULL

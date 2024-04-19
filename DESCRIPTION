@@ -1,7 +1,7 @@
-Package: sacReBLEU
+Package: sacRebleu
 Type: Package
 Title: Metrics for Assessing the Quality of Generated Text
-Version: 1.0
+Version: 1.0.0
 Date: 2024-04-05
 Author: Philipp Koch
 Maintainer: Philipp Koch <PhillKoch@protonmail.com>
@@ -14,8 +14,8 @@ Imports:
     Rcpp (>= 1.0.12),
     tok
 LinkingTo: Rcpp
-URL: https://github.com/LazerLambda/sacReBLEU
-BugReports: https://github.com/LazerLambda/sacReBLEU/issues
+URL: https://github.com/LazerLambda/sacRebleu
+BugReports: https://github.com/LazerLambda/sacRebleu/issues
 Suggests: 
     knitr,
     rmarkdown,

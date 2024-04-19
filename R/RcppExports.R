@@ -2,6 +2,6 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 .cpp_bleu_corpus_ids <- function(references, candidate, weights, smoothing, epsilon, k) {
-    .Call(`_sacReBLEU_cpp_bleu_corpus_ids`, references, candidate, weights, smoothing, epsilon, k)
+    .Call(`_sacRebleu_cpp_bleu_corpus_ids`, references, candidate, weights, smoothing, epsilon, k)
 }
 

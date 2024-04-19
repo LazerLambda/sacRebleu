@@ -7,8 +7,8 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(sacReBLEU)
+library(sacRebleu)
 
-test_check("sacReBLEU")
+test_check("sacRebleu")
 
 # source("../../R/bleu.R") # This is only needed if your project is not a package
