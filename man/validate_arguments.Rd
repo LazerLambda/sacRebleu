@@ -2,7 +2,7 @@
 % Please edit documentation in R/bleu.R
 \name{validate_arguments}
 \alias{validate_arguments}
-\title{Validate Arguemnts}
+\title{Validate Arguments}
 \usage{
 validate_arguments(weights, smoothing, n)
 }
@@ -17,5 +17,5 @@ validate_arguments(weights, smoothing, n)
 A list with the validated arguments (weights and smoothing)
 }
 \description{
-Validate Arguemnts
+Validate Arguments
 }

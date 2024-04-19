@@ -2,7 +2,7 @@ library(checkmate)
 
 
 
-#' Validate Arguemnts
+#' Validate Arguments
 #'
 #' @param weights Weight vector for `bleu_corpus_ids` and `bleu_sentence_ids` functions
 #' @param smoothing Smoothing method for `bleu_corpus_ids` and `bleu_sentence_ids` functions
@@ -40,9 +40,9 @@ validate_references <- function(references, target) {
 #'
 #' `bleu_sentence_ids` computes the BLEU score for a single candidate sentence and a list of reference sentences.
 #' The sentences must be tokenized before so they are represented as integer vectors.
-#' Akin to sacreBLEU, the function allows the application of different smoothing methods.
+#' Akin to sacrebleu (Python), the function allows the application of different smoothing methods.
 #' Epsilon- and add-k-smoothing are available. Epsilon-smoothing is equivalent to 'floor'
-#' smoothing in the sacreBLEU implementation.
+#' smoothing in the sacrebleu implementation.
 #' The different smoothing techniques are described in Chen et al., 2014
 #' (https://aclanthology.org/W14-3346/).
 #'
@@ -128,7 +128,7 @@ bleu_corpus_ids <- function(references, candidates, n = 4, weights = NULL, smoot
 # Compute BLEU for a Corpus with Tokenization
 #
 #' This function applies tokenization based on the 'tok' library and computes the BLEU score.
-#' An already initializied tokenizer can be provided using the `tokenizer`argument or
+#' An already initialized tokenizer can be provided using the `tokenizer`argument or
 #' a valid huggingface identifier (string) can be passed. If the identifier is used only,
 #' the tokenizer is newly initialized on every call.
 #' @param references A list of a list of reference sentences (`list(list(c(1,2,...)), list(c(3,5,...)))`).
