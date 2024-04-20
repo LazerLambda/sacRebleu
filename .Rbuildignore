@@ -5,3 +5,4 @@
 ^Meta$
 ^.lintr
 ^vignettes/(.*).ref$
+^\.vscode$

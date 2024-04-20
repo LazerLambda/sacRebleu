@@ -16,10 +16,22 @@ BLEU score, and is implemented in C++ for the R programming language.
 You can install the development version of sacRebleu from
 [GitHub](https://github.com/) with:
 
+### Linux and MacOS
+
 ``` r
 # install.packages("devtools")
 devtools::install_github("LazerLambda/sacRebleu")
 ```
+
+### Windows
+
+This package builds upon the [tok](https://github.com/mlverse/tok)
+package, which requires the Rust toolchain to be installed. To install
+the rustup, follow the instructions at
+[https://www.rust-lang.org/tools/install](https://rustup.rs/) and at
+[tok](https://github.com/mlverse/tok). After installing the Rust
+toolchain, you can install the development version of sacRebleu as
+described above.
 
 ## Example
 
