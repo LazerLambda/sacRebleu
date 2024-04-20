@@ -11,3 +11,4 @@ inst/doc
 *.ref
 ..Rcheck/
 .vscode/
+*.dll
