@@ -146,7 +146,7 @@ bleu_corpus_ids <- function(references, candidates, n = 4, weights = NULL, smoot
 #' @examples
 #' cand_corpus <- list("This is good", "This is not good")
 #' ref_corpus <- list(list("Perfect outcome!", "Excellent!"), list("Not sufficient.", "Horrible."))
-#' bleu_corpus <- bleu_corpus(ref_corpus, cand_corpus)
+#' # Call: bleu_corpus <- bleu_corpus(ref_corpus, cand_corpus)
 bleu_corpus <- function(
     references,
     candidates,
@@ -204,7 +204,7 @@ bleu_corpus <- function(
 #' @examples
 #' cand <- "Hello World!"
 #' ref <- list("Hello everyone.", "Hello Planet", "Hello World")
-#' bleu_standard <- bleu_sentence(ref, cand)
+#' # Call: bleu_standard <- bleu_sentence(ref, cand)
 bleu_sentence <- function(
     references,
     candidate,

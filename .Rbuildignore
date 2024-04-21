@@ -7,3 +7,4 @@
 ^vignettes/(.*).ref$
 ^\.vscode$
 ^cran-comments\.md$
+^CRAN-SUBMISSION$

@@ -62,53 +62,12 @@ the numerator and the denominator of the precision calculation for each 1..N-gra
 
 # Example
 
-First, we need to download the data. The repository of [Freitag et al., 2020](https://github.com/google/wmt19-paraphrased-references) offers additional reference translations
-for some WMT datasets.
-```{R}
-download.file("https://github.com/google/wmt19-paraphrased-references/raw/master/wmt19/ende/wmt19-ende-ar.ref", "wmt19-ende-ar.ref")
-download.file("https://github.com/google/wmt19-paraphrased-references/raw/master/wmt19/ende/wmt19-ende-arp.ref", "wmt19-ende-arp.ref")
-download.file("https://github.com/google/wmt19-paraphrased-references/raw/master/wmt19/ende/wmt19-ende-wmtp.ref", "wmt19-ende-wmtp.ref")
-```
-
-```{R}
-ar <- readLines("wmt19-ende-ar.ref")
-arp <- readLines("wmt19-ende-arp.ref")
-wmtp <- readLines("wmt19-ende-wmtp.ref")
-```
-
-Now, we need to bring the candidate and reference sentences into the correct format:
-```{r}
-references <- list()
-for (i in seq_along(ar)){
-  references[[i]] <- list(ar[[i]], arp[[i]])
-}
-```
-And compute the BLEU-score for the entire corpus:
 ```{r}
 library(sacRebleu)
-bleu_corpus(references=references, candidates = list(wmtp), n=4)
+cand_corpus <- list(c(1,2,3), c(1,2))
+ref_corpus <- list(list(c(1,2,3), c(2,3,4)), list(c(1,2,6), c(781, 21, 9), c(7, 3)))
+bleu_corpus_ids_standard <- bleu_corpus_ids(ref_corpus, cand_corpus)
 ```
 
-ere, tokenization occurs within the function. However, it's also possible to compute BLEU on already tokenized lists using the `bleu_corpus_ids`
-function. To employ this function in this example, we first need to tokenize the data. The [`tok`](https://cran.r-project.org/package=tok) package (available on CRAN) offers the
-Hugging Face tokenizers, which we'll utilize:
-```{r}
-library(tok)
-
-tok <- tok::tokenizer$from_pretrained("bert-base-cased")
-ar_ids <- lapply(ar, function(e){tok$encode(e)$ids})
-arp_ids <- lapply(arp, function(e){tok$encode(e)$ids})
-wmtp_ids <- lapply(wmtp, function(e){tok$encode(e)$ids})
-```
-As above, the reference sentences must be lists of lists of the references but with the distinction, that the references are repreented as numbers:
-```{r}
-references_ids <- list()
-for (i in seq_along(ar)){
-  references_ids[[i]] <- list(ar_ids[[i]], arp_ids[[i]])
-}
-```
-
-Now, we can compute the BLEU score:
-```{r}
-bleu_corpus_ids(references=references_ids, candidates = wmtp_ids, n=4)
-```
+Here, the text is already tokenized and represented through integers in the `cand_corpus` and `ref_corpus` lists. For tokenization, the [`tok`](https://cran.r-project.org/package=tok) package is recommended.
+ It is also possible to feed the function with text using the `bleu_corpus` or `bleu_sentence` functions.

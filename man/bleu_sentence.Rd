@@ -45,5 +45,5 @@ the tokenizer is newly initialized on every call.
 \examples{
 cand <- "Hello World!"
 ref <- list("Hello everyone.", "Hello Planet", "Hello World")
-bleu_standard <- bleu_sentence(ref, cand)
+# Call: bleu_standard <- bleu_sentence(ref, cand)
 }

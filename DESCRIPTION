@@ -7,6 +7,7 @@ Author: Philipp Koch
 Maintainer: Philipp Koch <PhillKoch@protonmail.com>
 Description: Package to provide metrics to assess the quality of generated text.
 License: GPL (>= 2)
+SystemRequirements: Rust tool chain w/ cargo, libclang/llvm-config
 Depends:
     R (>= 4.2.0)
 Imports: 
@@ -26,3 +27,4 @@ RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Encoding: UTF-8
 Language: en-US
+Config/rextendr/version: 0.3.1

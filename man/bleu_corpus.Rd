@@ -48,5 +48,5 @@ the tokenizer is newly initialized on every call.
 \examples{
 cand_corpus <- list("This is good", "This is not good")
 ref_corpus <- list(list("Perfect outcome!", "Excellent!"), list("Not sufficient.", "Horrible."))
-bleu_corpus <- bleu_corpus(ref_corpus, cand_corpus)
+# Call: bleu_corpus <- bleu_corpus(ref_corpus, cand_corpus)
 }
