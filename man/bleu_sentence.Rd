@@ -20,7 +20,8 @@ bleu_sentence(
 
 \item{candidate}{A candidate sentence.}
 
-\item{tokenizer}{An already initialized 'tok' tokenizer}
+\item{tokenizer}{Either an already initialized 'tok' tokenizer object or a
+huggingface identifier (default is 'bert-base-cased')}
 
 \item{n}{N-gram for BLEU score (default is set to 4).}
 
