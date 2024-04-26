@@ -347,7 +347,7 @@ static long double bleu_corpus_ids(vector<vector<vector<int>>> references, vecto
 /**
  * @brief Calculates the BLEU score for a list of a corpus.
  * 
- * Wrapper for the `bleu_corpus_ids` function to cast R datatypes to C++ datatypes.
+ * Wrapper for the 'bleu_corpus_ids' function to cast R datatypes to C++ datatypes.
  * 
  * @param references The list of reference sentences to compare against.
  * @param candidate The candidate sentence to calculate BLEU score for.

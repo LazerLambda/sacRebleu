@@ -17,4 +17,8 @@ Useful links:
 }
 
 }
+\author{
+\strong{Maintainer}: Philipp Koch \email{PhillKoch@protonmail.com}
+
+}
 \keyword{internal}

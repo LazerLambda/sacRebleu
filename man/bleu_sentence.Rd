@@ -38,12 +38,14 @@ The BLEU score for the candidate sentence.
 }
 \description{
 This function applies tokenization based on the 'tok' library and computes the BLEU score.
-An already initializied tokenizer can be provided using the `tokenizer` argument or
+An already initializied tokenizer can be provided using the 'tokenizer' argument or
 a valid huggingface identifier (string) can be passed. If the identifier is used only,
 the tokenizer is newly initialized on every call.
 }
 \examples{
+\dontrun{
 cand <- "Hello World!"
 ref <- list("Hello everyone.", "Hello Planet", "Hello World")
-# Call: bleu_standard <- bleu_sentence(ref, cand)
+tok <- tok::tokenizer$from_pretrained("bert-base-uncased")
+bleu_standard <- bleu_sentence(ref, cand, tok)}
 }

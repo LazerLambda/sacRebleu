@@ -1,11 +1,15 @@
 Package: sacRebleu
 Type: Package
 Title: Metrics for Assessing the Quality of Generated Text
-Version: 0.1.0
+Version: 0.1.2
 Date: 2024-04-05
-Author: Philipp Koch
-Maintainer: Philipp Koch <PhillKoch@protonmail.com>
-Description: Package to provide metrics to assess the quality of generated text.
+Authors@R: c(person("Philipp", "Koch", role = c("aut", "cre"), email = "PhillKoch@protonmail.com"))
+Description: Implementation of the BLEU-Score in 'C++' to evaluate the
+    quality of generated text. The BLEU-Score, introduced by Papineni et al. (2002)
+    <doi:10.3115/1073083.1073135>, is a metric for evaluating the quality of
+    generated text. It is based on the n-gram overlap between the generated
+    text and reference texts. Additionally, the package provides some smoothing
+    methods as described in Chen and Cherry (2014) <doi:10.3115/v1/W14-3346>.
 License: GPL (>= 2)
 SystemRequirements: Rust tool chain w/ cargo, libclang/llvm-config
 Depends:
@@ -21,7 +25,8 @@ Suggests:
     knitr,
     rmarkdown,
     hfhub,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr
 Config/testthat/edition: 3
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
