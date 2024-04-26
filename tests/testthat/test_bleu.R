@@ -26,7 +26,7 @@ test_that("Expect errors for wrong arguments", {
   testthat::expect_error(bleu_corpus_ids(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), n=0.5))
 })
 
-test_that("Expect number for `bleu_sentence_ids`", {
+test_that("Expect number for 'bleu_sentence_ids'", {
   testthat::expect_vector(bleu_sentence_ids(list(c(1,2,3), c(2,3,4)), c(1,2,3), n=2))
   ref_corpus <- list(c(1,2,3,4))
   cand_corpus <- c(1,2,3,5)
@@ -36,7 +36,7 @@ test_that("Expect number for `bleu_sentence_ids`", {
   testthat::expect_vector(bleu_sentence_ids(ref_corpus, cand_corpus, n=4, smoothing="add-k", k=1))
 })
 
-test_that("Expect number for `bleu_corpus_ids`", {
+test_that("Expect number for 'bleu_corpus_ids'", {
   testthat::expect_vector(bleu_corpus_ids(list(list(c(1,2,3), c(2,3,4))), list(c(1,2,3)), n=2))
   ref_corpus <- list(list(c(1,2,3,4)))
   cand_corpus <- list(c(1,2,3,5))
@@ -108,3 +108,5 @@ test_that("Expect Errors with Tokenizer Functions", {
   testthat::expect_error(bleu_corpus(0, list(cand), tokenizer=tok))
   testthat::expect_error(bleu_corpus(list(ref), 0, tokenizer=tok))
 })
+
+withr::defer(unlink(".cache/huggingface"), teardown_env())

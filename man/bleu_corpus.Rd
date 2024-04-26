@@ -3,7 +3,7 @@
 \name{bleu_corpus}
 \alias{bleu_corpus}
 \title{This function applies tokenization based on the 'tok' library and computes the BLEU score.
-An already initialized tokenizer can be provided using the `tokenizer`argument or
+An already initialized tokenizer can be provided using the `tokenizer` argument or
 a valid huggingface identifier (string) can be passed. If the identifier is used only,
 the tokenizer is newly initialized on every call.}
 \usage{
@@ -23,8 +23,7 @@ bleu_corpus(
 
 \item{candidates}{A list of candidate sentences (`list(c(1,2,...), c(3,5,...))`).}
 
-\item{tokenizer}{Either an already initialized 'tok' tokenizer object or a
-huggingface identifier (default is 'bert-base-cased')}
+\item{tokenizer}{An already initialized 'tok' tokenizer}
 
 \item{n}{N-gram for BLEU score (default is set to 4).}
 
@@ -41,12 +40,14 @@ The BLEU score for the candidate sentence.
 }
 \description{
 This function applies tokenization based on the 'tok' library and computes the BLEU score.
-An already initialized tokenizer can be provided using the `tokenizer`argument or
+An already initialized tokenizer can be provided using the `tokenizer` argument or
 a valid huggingface identifier (string) can be passed. If the identifier is used only,
 the tokenizer is newly initialized on every call.
 }
 \examples{
+\dontrun{
 cand_corpus <- list("This is good", "This is not good")
 ref_corpus <- list(list("Perfect outcome!", "Excellent!"), list("Not sufficient.", "Horrible."))
-# Call: bleu_corpus <- bleu_corpus(ref_corpus, cand_corpus)
+tok <- tok::tokenizer$from_pretrained("bert-base-uncased")
+bleu_corpus <- bleu_corpus(ref_corpus, cand_corpus, tok)}
 }

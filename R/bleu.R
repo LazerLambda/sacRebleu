@@ -4,9 +4,9 @@ library(checkmate)
 
 #' Validate Arguments
 #'
-#' @param weights Weight vector for `bleu_corpus_ids` and `bleu_sentence_ids` functions
-#' @param smoothing Smoothing method for `bleu_corpus_ids` and `bleu_sentence_ids` functions
-#' @param n N-gram for `bleu_corpus_ids` and `bleu_sentence_ids` functions
+#' @param weights Weight vector for 'bleu_corpus_ids' and 'bleu_sentence_ids' functions
+#' @param smoothing Smoothing method for 'bleu_corpus_ids' and 'bleu_sentence_ids' functions
+#' @param n N-gram for 'bleu_corpus_ids' and 'bleu_sentence_ids' functions
 #' @returns A list with the validated arguments (weights and smoothing)
 validate_arguments <- function(weights, smoothing, n) {
   if (!is.null(weights)) {
@@ -38,9 +38,9 @@ validate_references <- function(references, target) {
 
 #' Computes BLEU-Score (Papineni et al., 2002).
 #'
-#' `bleu_sentence_ids` computes the BLEU score for a single candidate sentence and a list of reference sentences.
+#' 'bleu_sentence_ids' computes the BLEU score for a single candidate sentence and a list of reference sentences.
 #' The sentences must be tokenized before so they are represented as integer vectors.
-#' Akin to sacrebleu (Python), the function allows the application of different smoothing methods.
+#' Akin to 'sacrebleu' ('Python'), the function allows the application of different smoothing methods.
 #' Epsilon- and add-k-smoothing are available. Epsilon-smoothing is equivalent to 'floor'
 #' smoothing in the sacrebleu implementation.
 #' The different smoothing techniques are described in Chen et al., 2014
@@ -80,9 +80,9 @@ bleu_sentence_ids <- function(references, candidate, n = 4, weights = NULL, smoo
 
 #' Computes BLEU score (Papineni et al., 2002).
 #'
-#' `bleu_sentence_ids` computes the BLEU score for a corpus and its respective reference sentences.
+#' 'bleu_sentence_ids' computes the BLEU score for a corpus and its respective reference sentences.
 #' The sentences must be tokenized before so they are represented as integer vectors.
-#' Akin to sacreBLEU, the function allows the application of different smoothing methods.
+#' Akin to 'sacrebleu' ('Python'), the function allows the application of different smoothing methods.
 #' Epsilon- and add-k-smoothing are available. Epsilon-smoothing is equivalent to 'floor'
 #' smoothing in the sacreBLEU implementation.
 #' The different smoothing techniques are described in Chen et al., 2014
@@ -128,7 +128,7 @@ bleu_corpus_ids <- function(references, candidates, n = 4, weights = NULL, smoot
 # Compute BLEU for a Corpus with Tokenization
 #
 #' This function applies tokenization based on the 'tok' library and computes the BLEU score.
-#' An already initialized tokenizer can be provided using the `tokenizer`argument or
+#' An already initialized tokenizer can be provided using the `tokenizer` argument or
 #' a valid huggingface identifier (string) can be passed. If the identifier is used only,
 #' the tokenizer is newly initialized on every call.
 #' @param references A list of a list of reference sentences (`list(list(c(1,2,...)), list(c(3,5,...)))`).
@@ -144,9 +144,11 @@ bleu_corpus_ids <- function(references, candidates, n = 4, weights = NULL, smoot
 #' @returns The BLEU score for the candidate sentence.
 #' @export
 #' @examples
+#' \dontrun{
 #' cand_corpus <- list("This is good", "This is not good")
 #' ref_corpus <- list(list("Perfect outcome!", "Excellent!"), list("Not sufficient.", "Horrible."))
-#' # Call: bleu_corpus <- bleu_corpus(ref_corpus, cand_corpus)
+#' tok <- tok::tokenizer$from_pretrained("bert-base-uncased")
+#' bleu_corpus <- bleu_corpus(ref_corpus, cand_corpus, tok)}
 bleu_corpus <- function(
     references,
     candidates,
@@ -186,7 +188,7 @@ bleu_corpus <- function(
 #' Compute BLEU for a Sentence with Tokenization
 #'
 #' This function applies tokenization based on the 'tok' library and computes the BLEU score.
-#' An already initializied tokenizer can be provided using the `tokenizer` argument or
+#' An already initializied tokenizer can be provided using the 'tokenizer' argument or
 #' a valid huggingface identifier (string) can be passed. If the identifier is used only,
 #' the tokenizer is newly initialized on every call.
 #' @param references A list of reference sentences.
@@ -202,9 +204,11 @@ bleu_corpus <- function(
 #' @returns The BLEU score for the candidate sentence.
 #' @export
 #' @examples
+#' \dontrun{
 #' cand <- "Hello World!"
 #' ref <- list("Hello everyone.", "Hello Planet", "Hello World")
-#' # Call: bleu_standard <- bleu_sentence(ref, cand)
+#' tok <- tok::tokenizer$from_pretrained("bert-base-uncased")
+#' bleu_standard <- bleu_sentence(ref, cand, tok)}
 bleu_sentence <- function(
     references,
     candidate,

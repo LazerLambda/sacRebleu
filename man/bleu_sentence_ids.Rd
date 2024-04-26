@@ -33,9 +33,9 @@ bleu_sentence_ids(
 The BLEU score for the candidate sentence.
 }
 \description{
-`bleu_sentence_ids` computes the BLEU score for a single candidate sentence and a list of reference sentences.
+'bleu_sentence_ids' computes the BLEU score for a single candidate sentence and a list of reference sentences.
 The sentences must be tokenized before so they are represented as integer vectors.
-Akin to sacrebleu (Python), the function allows the application of different smoothing methods.
+Akin to 'sacrebleu' (Python), the function allows the application of different smoothing methods.
 Epsilon- and add-k-smoothing are available. Epsilon-smoothing is equivalent to 'floor'
 smoothing in the sacrebleu implementation.
 The different smoothing techniques are described in Chen et al., 2014
