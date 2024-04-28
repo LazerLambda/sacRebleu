@@ -46,9 +46,9 @@ a valid huggingface identifier (string) can be passed. If the identifier is used
 the tokenizer is newly initialized on every call.
 }
 \examples{
-\dontrun{
 cand_corpus <- list("This is good", "This is not good")
 ref_corpus <- list(list("Perfect outcome!", "Excellent!"), list("Not sufficient.", "Horrible."))
+\donttest{
 tok <- tok::tokenizer$from_pretrained("bert-base-uncased")
 bleu_corpus <- bleu_corpus(ref_corpus, cand_corpus, tok)}
 }
