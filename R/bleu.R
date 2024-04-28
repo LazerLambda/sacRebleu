@@ -144,11 +144,12 @@ bleu_corpus_ids <- function(references, candidates, n = 4, weights = NULL, smoot
 #' @returns The BLEU score for the candidate sentence.
 #' @export
 #' @examples
-#' \dontrun{
 #' cand_corpus <- list("This is good", "This is not good")
 #' ref_corpus <- list(list("Perfect outcome!", "Excellent!"), list("Not sufficient.", "Horrible."))
+#' \donttest{
 #' tok <- tok::tokenizer$from_pretrained("bert-base-uncased")
 #' bleu_corpus <- bleu_corpus(ref_corpus, cand_corpus, tok)}
+#' \dontshow{unlink(".cache/huggingface")}
 bleu_corpus <- function(
     references,
     candidates,
@@ -204,11 +205,12 @@ bleu_corpus <- function(
 #' @returns The BLEU score for the candidate sentence.
 #' @export
 #' @examples
-#' \dontrun{
 #' cand <- "Hello World!"
 #' ref <- list("Hello everyone.", "Hello Planet", "Hello World")
+#' \donttest{
 #' tok <- tok::tokenizer$from_pretrained("bert-base-uncased")
 #' bleu_standard <- bleu_sentence(ref, cand, tok)}
+#' \dontshow{unlink(".cache/huggingface")}
 bleu_sentence <- function(
     references,
     candidate,

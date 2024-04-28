@@ -43,9 +43,9 @@ a valid huggingface identifier (string) can be passed. If the identifier is used
 the tokenizer is newly initialized on every call.
 }
 \examples{
-\dontrun{
 cand <- "Hello World!"
 ref <- list("Hello everyone.", "Hello Planet", "Hello World")
+\donttest{
 tok <- tok::tokenizer$from_pretrained("bert-base-uncased")
 bleu_standard <- bleu_sentence(ref, cand, tok)}
 }
